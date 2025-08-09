@@ -2,9 +2,12 @@
 
 A modern, powerful Neovim configuration optimized for **Elixir/Phoenix**, **Rust**, **Go**, **Python**, **JavaScript**, **HTML**, and **CSS** development.
 
+**🎹 Keyboard Layout Support**: Works with **QWERTY** (default) and **Dvorak** (optional) layouts!
+
 ## 📋 Table of Contents
 
 - [Features](#-features)
+- [Keyboard Layout Support](#-keyboard-layout-support)
 - [Installation](#-installation)
 - [Key Mappings](#-key-mappings)
 - [Plugin Overview](#-plugin-overview)
@@ -13,6 +16,8 @@ A modern, powerful Neovim configuration optimized for **Elixir/Phoenix**, **Rust
 - [Troubleshooting](#-troubleshooting)
 
 ## ✨ Features
+
+### 🎯 Core Development Features
 
 ### Core Features
 - **Modern Plugin Manager**: Lazy.nvim for fast startup and lazy loading

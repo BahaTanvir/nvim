@@ -89,4 +89,4 @@ require("config.keymaps")
 require("config.autocmds-enhanced")
 
 -- Load Dvorak keymaps (comment out if using QWERTY)
-require("config.dvorak-keymaps")
+require("config.keyboard-layout")
