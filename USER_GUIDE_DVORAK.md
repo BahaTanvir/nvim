@@ -2,7 +2,7 @@
 
 **Welcome to Neovim with Dvorak keyboard support!** This comprehensive guide will help you master your new Neovim setup specifically configured for Dvorak keyboard users.
 
-## Note: I use extensively modified Dvorak keymap completely diffirent from how it works in Qwerty. You can use mine or you can use on your own. In either case you'll get Guideline from this document.
+## *Note*: I use extensively modified Dvorak keymap, completely diffirent from how it works in Qwerty. You can use mine or you can use your own. In either case you'll get Guideline from this document.
 
 ## 🎹 Dvorak Layout Integration
 
