@@ -1,0 +1,83 @@
+# Neovim
+.netrwhist
+*.tmp
+*.swp
+*.swo
+*~
+
+# Plugin data
+plugin/
+.repro/
+debug.log
+
+# LSP logs
+lsp.log
+
+# Session files
+Session.vim
+.session
+
+# Lazy.nvim
+lazy-lock.json
+
+# Mason
+mason/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.backup
+*.bak
+
+# Node modules (if any)
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Rust
+target/
+Cargo.lock
+
+# Go
+go.sum
+
+# Elixir
+_build/
+deps/
+*.ez
+.elixir_ls/
+
+# Local configuration
+local.lua
+local/

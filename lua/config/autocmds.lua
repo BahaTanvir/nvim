@@ -1,0 +1,2 @@
+-- This file has been replaced with an enhanced version
+-- The new autocmds.lua is already loaded
