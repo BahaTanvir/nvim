@@ -9,7 +9,7 @@
   Comprehensive Development Environment
   Languages: Elixir/Phoenix, Rust, Go, Python, JavaScript, HTML, CSS
   
-  Author: Your Setup
+  Author: Baha Tanvir
   Version: 1.0.0
 --]]
 
