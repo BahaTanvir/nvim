@@ -1,8 +1,9 @@
-# 🚀 Ultimate Neovim Development Setup (10/10)
+# Ultimate Neovim Development Setup
 
-A modern, powerful Neovim configuration optimized for **Elixir/Phoenix**, **Rust**, **Go**, **Python**, **JavaScript**, **HTML**, and **CSS** development.
+A modern, powerful Neovim configuration optimized for **Elixir/Phoenix**, **Rust**, **Go**, **Python**, **JavaScript**, **HTML**, **CSS** development and **Easily Add Other Programming Languages Following Guides**
 
 **🎹 Keyboard Layout Support**: Works with **QWERTY** (default) and **Dvorak** (optional) layouts!
+    *Check Dvorak Guideline*
 
 ## 📋 Table of Contents
 
@@ -327,8 +328,9 @@ return {
   config = function()
     vim.cmd.colorscheme("your-theme")
   end,
-}
 ```
+**or**
+`colorscheme` command
 
 ## 🐛 Troubleshooting
 
