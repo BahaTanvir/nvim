@@ -11,12 +11,6 @@ end
 
 -- core dvorak mappings (based on user's current setup)
 local function apply_core()
-  -- Escape & dash/backslash behavior
-  set("i", "-", "<Esc>", { desc = "Exit insert mode (Dvorak)" })
-  set("i", "\\", "-", { desc = "Insert dash character" })
-  set("n", ",", "<Nop>")
-  set("i", ",\\", "\\", { desc = "Insert backslash character" })
-
   -- Movement
   set("n", "h", "gj", { desc = "Move down (visual line)" })
   set("n", "u", "gk", { desc = "Move up (visual line)" })
@@ -76,12 +70,26 @@ local function apply_core()
   set("v", "D", '"_D', { desc = "Delete lines without yanking" })
 end
 
+local function lsp_picker_or_builtin(name, fallback)
+  return function()
+    local ok, tb = pcall(require, "telescope.builtin")
+    if ok and type(tb[name]) == "function" then
+      return tb[name]()
+    end
+    if type(fallback) == "function" then
+      return fallback()
+    end
+  end
+end
+
 local function apply_plugin_overrides()
-  -- LSP (prefer telescope pickers when available)
-  set("n", "gd", "<cmd>Telescope lsp_definitions<cr>", { desc = "Go to definition" })
-  set("n", "gr", "<cmd>Telescope lsp_references<cr>", { desc = "References" })
-  set("n", "gn", vim.lsp.buf.implementation, { desc = "Implementation" })
-  set("n", "gy", "<cmd>Telescope lsp_type_definitions<cr>", { desc = "Type definition" })
+  -- Prefer Telescope pickers if available; fallback to built-in LSP
+  set("n", "gd", lsp_picker_or_builtin("lsp_definitions", vim.lsp.buf.definition), { desc = "Go to definition" })
+  set("n", "gr", lsp_picker_or_builtin("lsp_references", function()
+    vim.lsp.buf.references({ includeDeclaration = false })
+  end), { desc = "References" })
+  set("n", "gn", lsp_picker_or_builtin("lsp_implementations", vim.lsp.buf.implementation), { desc = "Implementation" })
+  set("n", "gy", lsp_picker_or_builtin("lsp_type_definitions", vim.lsp.buf.type_definition), { desc = "Type definition" })
 end
 
 local function apply_all()
@@ -96,14 +104,29 @@ function M.setup(_)
   -- Apply immediately
   apply_all()
 
-  -- Re-apply on events where plugins might override keys
-  vim.api.nvim_create_autocmd({ "BufEnter", "TermClose" }, {
+  -- Re-apply after plugins and LSP attach (but not on every buffer) to keep your maps winning.
+  vim.api.nvim_create_autocmd("User", {
+    pattern = { "VeryLazy", "LazyVimStarted" },
     callback = function()
-      vim.defer_fn(function()
-        apply_all()
-      end, 25)
+      vim.schedule(apply_all)
     end,
   })
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function()
+      vim.schedule(apply_all)
+    end,
+  })
+  vim.api.nvim_create_autocmd("UIEnter", {
+    once = true,
+    callback = function()
+      vim.schedule(apply_all)
+    end,
+  })
+
+  -- Manual command to re-apply on demand
+  vim.api.nvim_create_user_command("DvorakReapply", function()
+    apply_all()
+  end, {})
 end
 
 return M

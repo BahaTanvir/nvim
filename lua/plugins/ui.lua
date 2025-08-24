@@ -78,45 +78,58 @@ return {
             total = 0,
             enabled = vim.fs.find("mutagen.yml", { path = cwd, upward = true })[1] ~= nil,
             status = {},
+            pending = false,
+            warned = false,
           }
+        local s = mutagen[cwd]
         local now = vim.uv.now() -- timestamp in milliseconds
-        local refresh = mutagen[cwd].updated + 10000 < now
-        if #mutagen[cwd].status > 0 then
-          refresh = mutagen[cwd].updated + 1000 < now
+        local refresh = s.updated + 10000 < now
+        if #s.status > 0 then
+          refresh = s.updated + 1000 < now
         end
-        if mutagen[cwd].enabled and refresh then
-          ---@type {name:string, status:string, idle:boolean}[]
-          local sessions = {}
-          local lines = vim.fn.systemlist("mutagen project list")
-          local status = {}
-          local name = nil
-          for _, line in ipairs(lines) do
-            local n = line:match("^Name: (.*)")
-            if n then
-              name = n
+        if s.enabled and refresh and not s.pending then
+          s.pending = true
+          vim.system({ "mutagen", "project", "list" }, { text = true }, function(proc)
+            local sessions = {}
+            local status = {}
+            local name = nil
+            if proc.code == 0 and proc.stdout then
+              for _, line in ipairs(vim.split(proc.stdout, "\n", { trimempty = true })) do
+                local n = line:match("^Name: (.*)")
+                if n then
+                  name = n
+                end
+                local st = line:match("^Status: (.*)")
+                if st then
+                  table.insert(sessions, {
+                    name = name,
+                    status = st,
+                    idle = st == "Watching for changes",
+                  })
+                end
+              end
+              for _, session in ipairs(sessions) do
+                if not session.idle then
+                  table.insert(status, session.name .. ": " .. session.status)
+                end
+              end
             end
-            local s = line:match("^Status: (.*)")
-            if s then
-              table.insert(sessions, {
-                name = name,
-                status = s,
-                idle = s == "Watching for changes",
-              })
+            s.updated = now
+            s.total = #sessions
+            s.status = status
+            s.pending = false
+            if s.total == 0 and not s.warned then
+              -- Notify once per session to avoid spamming
+              pcall(vim.notify, "Mutagen is not running", vim.log.levels.ERROR, { title = "Mutagen" })
+              s.warned = true
             end
-          end
-          for _, session in ipairs(sessions) do
-            if not session.idle then
-              table.insert(status, session.name .. ": " .. session.status)
-            end
-          end
-          mutagen[cwd].updated = now
-          mutagen[cwd].total = #sessions
-          mutagen[cwd].status = status
-          if #sessions == 0 then
-            vim.notify("Mutagen is not running", vim.log.levels.ERROR, { title = "Mutagen" })
-          end
+            -- Trigger a redraw of the statusline to reflect updated info
+            vim.schedule(function()
+              pcall(vim.cmd, "redrawstatus")
+            end)
+          end)
         end
-        return mutagen[cwd]
+        return s
       end
 
       local error_color = { fg = Snacks.util.color("DiagnosticError") }

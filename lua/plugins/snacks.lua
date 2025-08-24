@@ -90,17 +90,33 @@ return {
       indent = {
         chunk = { enabled = true },
       },
-      dashboard = { example = "github" },
+      dashboard = (vim.fn.executable("gh") == 1) and { example = "github" } or {
+        sections = {
+          { section = "header", text = {
+            "",
+            "    Neovim",
+            "",
+          }},
+          { section = "keys", gap = 1 },
+          { section = "startup", gap = 1 },
+        },
+      },
       gitbrowse = {
         open = function(url)
-          vim.fn.system(" ~/dot/config/hypr/scripts/quake")
+          -- Hyprland-specific script removed; just open the URL
           vim.ui.open(url)
         end,
       },
     },
     -- stylua: ignore
     keys = {
-      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Open" },
+      { "<leader><space>", function()
+          Snacks.picker.smart()
+          vim.schedule(function()
+            local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+            vim.api.nvim_feedkeys(esc, "n", false)
+          end)
+        end, desc = "Smart Open (Normal Mode)" },
       { "<leader>dd", function() Snacks.picker.grep({search = "^(?!\\s*--).*\\b(bt|dd)\\(", args = {"-P"}, live = false, ft = "lua"}) end, desc = "Debug Searcher" },
       { "<leader>t", function() Snacks.scratch({ icon = " ", name = "Todo", ft = "markdown", file = "~/dot/TODO.md" }) end, desc = "Todo List" },
       {
