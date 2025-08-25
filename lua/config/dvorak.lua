@@ -11,6 +11,14 @@ end
 
 -- core dvorak mappings (based on user's current setup)
 local function apply_core()
+  -- Escape and dash input
+  set("i", "-", function()
+    local cmp = package.loaded.cmp
+    if cmp and cmp.visible() then cmp.abort() end
+    return "<C-g>u<Esc>"
+  end, { expr = true, desc = "Minus as Escape (Dvorak)" })
+  -- Alternate ways to insert a dash
+  set("i", "<M-->", "-", { desc = "Insert dash (Alt-minus)" })
   -- Movement
   set("n", "h", "gj", { desc = "Move down (visual line)" })
   set("n", "u", "gk", { desc = "Move up (visual line)" })
