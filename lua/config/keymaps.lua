@@ -7,6 +7,8 @@ if term.is_wezterm then
 end
 
 vim.keymap.set("n", "<C-c>", "ciw")
+vim.keymap.set("v", "<C-c>", '"+y', { desc = "Copy to clipboard" })
+vim.keymap.set("i", "<C-v>", "<C-r>+", { desc = "Paste from clipboard" })
 vim.keymap.set("n", "<Up>", "<c-w>k")
 vim.keymap.set("n", "<Down>", "<c-w>j")
 vim.keymap.set("n", "<Left>", "<c-w>h")

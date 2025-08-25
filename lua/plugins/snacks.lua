@@ -117,6 +117,13 @@ return {
             vim.api.nvim_feedkeys(esc, "n", false)
           end)
         end, desc = "Smart Open (Normal Mode)" },
+      { "<leader>,", function()
+          Snacks.picker.buffers()
+          vim.schedule(function()
+            local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+            vim.api.nvim_feedkeys(esc, "n", false)
+          end)
+        end, desc = "Buffers (Normal Mode)" },
       { "<leader>dd", function() Snacks.picker.grep({search = "^(?!\\s*--).*\\b(bt|dd)\\(", args = {"-P"}, live = false, ft = "lua"}) end, desc = "Debug Searcher" },
       { "<leader>T", function() Snacks.scratch({ icon = " ", name = "Todo", ft = "markdown", file = "~/dot/TODO.md" }) end, desc = "Todo List" },
       {
