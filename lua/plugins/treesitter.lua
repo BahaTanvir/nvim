@@ -3,12 +3,17 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
+      -- Prefer git for parser installations to avoid tarball extraction issues
+      pcall(function()
+        require("nvim-treesitter.install").prefer_git = true
+      end)
       -- add caddyfile support
       require("nvim-treesitter.parsers").get_parser_configs().caddy = {
         install_info = {
+          revision = "HEAD",
           url = "https://github.com/Samonitari/tree-sitter-caddy",
           files = { "src/parser.c", "src/scanner.c" },
-          branch = "master",
+         branch = "main",
         },
         filetype = "caddy",
       }

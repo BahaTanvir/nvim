@@ -42,10 +42,3 @@ require("config.lazy").load({
     require = true,
   },
 })
-
-vim.api.nvim_create_autocmd("User", {
-  pattern = "VeryLazy",
-  callback = function()
-    require("util").version()
-  end,
-})

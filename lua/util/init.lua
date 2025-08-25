@@ -6,16 +6,16 @@ function M.test(is_file)
   require("plenary.test_harness").test_directory(file, { minimal_init = init, sequential = true })
 end
 
-function M.version()
-  local v = vim.version()
-  if v and not v.prerelease then
-    vim.notify(
-      ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
-      vim.log.levels.WARN,
-      { title = "Neovim: not running nightly!" }
-    )
-  end
-end
+-- function M.version()
+--   local v = vim.version()
+--   if v and not v.prerelease then
+--     vim.notify(
+--       ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
+--       vim.log.levels.WARN,
+--       { title = "Neovim: not running nightly!" }
+--     )
+--   end
+-- end
 
 function M.cowboy()
   ---@type table?
@@ -103,9 +103,9 @@ end
 function M.wezterm()
   local nav = {
     h = "Left",
-    j = "Down",
-    k = "Up",
-    l = "Right",
+    t = "Down",
+    n = "Up",
+    s = "Right",
   }
 
   local function navigate(dir)

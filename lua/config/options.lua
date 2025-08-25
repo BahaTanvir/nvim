@@ -30,6 +30,8 @@ vim.g.lazyvim_python_ruff = "ruff"
 
 if vim.fn.has("win32") == 1 then
   LazyVim.terminal.setup("pwsh")
+else
+  LazyVim.terminal.setup("bash")
 end
 
 vim.g.deprecation_warnings = true

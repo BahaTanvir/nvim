@@ -90,7 +90,7 @@ return {
       indent = {
         chunk = { enabled = true },
       },
-      dashboard = (vim.fn.executable("gh") == 1) and { example = "github" } or {
+      dashboard = (vim.fn.executable("gh") == 1 and vim.fn.executable("colorscript") == 1) and { example = "github" } or {
         sections = {
           { section = "header", text = {
             "",

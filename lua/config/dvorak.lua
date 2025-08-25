@@ -85,11 +85,21 @@ end
 local function apply_plugin_overrides()
   -- Prefer Telescope pickers if available; fallback to built-in LSP
   set("n", "gd", lsp_picker_or_builtin("lsp_definitions", vim.lsp.buf.definition), { desc = "Go to definition" })
-  set("n", "gr", lsp_picker_or_builtin("lsp_references", function()
-    vim.lsp.buf.references({ includeDeclaration = false })
-  end), { desc = "References" })
+  set(
+    "n",
+    "gr",
+    lsp_picker_or_builtin("lsp_references", function()
+      vim.lsp.buf.references({ includeDeclaration = false })
+    end),
+    { desc = "References" }
+  )
   set("n", "gn", lsp_picker_or_builtin("lsp_implementations", vim.lsp.buf.implementation), { desc = "Implementation" })
-  set("n", "gy", lsp_picker_or_builtin("lsp_type_definitions", vim.lsp.buf.type_definition), { desc = "Type definition" })
+  set(
+    "n",
+    "gy",
+    lsp_picker_or_builtin("lsp_type_definitions", vim.lsp.buf.type_definition),
+    { desc = "Type definition" }
+  )
 end
 
 local function apply_all()
