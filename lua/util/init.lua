@@ -6,21 +6,10 @@ function M.test(is_file)
   require("plenary.test_harness").test_directory(file, { minimal_init = init, sequential = true })
 end
 
--- function M.version()
---   local v = vim.version()
---   if v and not v.prerelease then
---     vim.notify(
---       ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
---       vim.log.levels.WARN,
---       { title = "Neovim: not running nightly!" }
---     )
---   end
--- end
-
 function M.cowboy()
   ---@type table?
   local ok = true
-  for _, key in ipairs({ "h", "j", "k", "l", "+", "-" }) do
+  for _, key in ipairs({ "h", "gj", "gk", "l", "+", "-" }) do
     local count = 0
     local timer = assert(vim.uv.new_timer())
     local map = key

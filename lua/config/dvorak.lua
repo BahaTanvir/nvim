@@ -17,6 +17,12 @@ local function apply_core()
     if cmp and cmp.visible() then cmp.abort() end
     return "<C-g>u<Esc>"
   end, { expr = true, desc = "Minus as Escape (Dvorak)" })
+  -- Also allow 'ht' as a fast escape chord in insert mode
+  set("i", "ht", function()
+    local cmp = package.loaded.cmp
+    if cmp and cmp.visible() then cmp.abort() end
+    return "<C-g>u<Esc>"
+  end, { expr = true, desc = "ht as Escape (Dvorak)" })
   -- Alternate ways to insert a dash
   set("i", "<M-->", "-", { desc = "Insert dash (Alt-minus)" })
   -- Movement
