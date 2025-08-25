@@ -28,11 +28,8 @@ end
 vim.g.lazyvim_python_lsp = "basedpyright"
 vim.g.lazyvim_python_ruff = "ruff"
 
-if vim.fn.has("win32") == 1 then
-  LazyVim.terminal.setup("pwsh")
-else
-  LazyVim.terminal.setup("bash")
-end
+local term = require("config.terminal")
+LazyVim.terminal.setup(term.shell())
 
 vim.g.deprecation_warnings = true
 -- better coop with fzf-lua

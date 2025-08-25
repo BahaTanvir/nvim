@@ -10,7 +10,7 @@ return {
       scroll = { debug = false },
       image = {
         force = false,
-        enabled = true,
+        enabled = require("config.terminal").image_enabled(),
         debug = { request = false, convert = false, placement = false },
         math = { enabled = true },
         doc = { inline = true, float = true },

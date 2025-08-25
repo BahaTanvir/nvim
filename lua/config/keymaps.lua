@@ -1,9 +1,10 @@
 local util = require("util")
+local term = require("config.terminal")
 
 util.cowboy()
--- util.wezterm()
-
-
+if term.is_wezterm then
+  util.wezterm()
+end
 
 vim.keymap.set("n", "<C-c>", "ciw")
 vim.keymap.set("n", "<Up>", "<c-w>k")
