@@ -1,7 +1,6 @@
 local util = require("util")
 local term = require("config.terminal")
 
-util.cowboy()
 if term.is_wezterm then
   util.wezterm()
 end

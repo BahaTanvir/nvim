@@ -9,7 +9,8 @@ end
 function M.cowboy()
   ---@type table?
   local ok = true
-  for _, key in ipairs({ "h", "gj", "gk", "l", "+", "-" }) do
+  -- Monitor Dvorak movement keys: h(down), u(up), j(right), J(left), plus common keys
+  for _, key in ipairs({ "h", "u", "j", "J", "+", "-" }) do
     local count = 0
     local timer = assert(vim.uv.new_timer())
     local map = key

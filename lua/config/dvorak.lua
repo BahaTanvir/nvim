@@ -9,6 +9,37 @@ local function set(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+-- Cowboy protection for movement keys
+local cowboy_timers = {}
+local function cowboy_key(key, action)
+  return function()
+    if vim.v.count > 0 then
+      cowboy_timers[key] = 0
+    end
+    cowboy_timers[key] = (cowboy_timers[key] or 0) + 1
+    if cowboy_timers[key] >= 10 and vim.bo.buftype ~= "nofile" then
+      local ok = pcall(vim.notify, "Hold it Cowboy!", vim.log.levels.WARN, {
+        icon = "🤠",
+        id = "cowboy",
+        keep = function()
+          return cowboy_timers[key] >= 10
+        end,
+      })
+      if not ok then
+        return key
+      end
+    else
+      local timer = vim.uv.new_timer()
+      if timer then
+        timer:start(2000, 0, function()
+          cowboy_timers[key] = 0
+        end)
+      end
+      return action
+    end
+  end
+end
+
 -- core dvorak mappings (based on user's current setup)
 local function apply_core()
   -- Escape and dash input
@@ -25,9 +56,9 @@ local function apply_core()
   end, { expr = true, desc = "ht as Escape (Dvorak)" })
   -- Alternate ways to insert a dash
   set("i", "<M-->", "-", { desc = "Insert dash (Alt-minus)" })
-  -- Movement
-  set("n", "h", "gj", { desc = "Move down (visual line)" })
-  set("n", "u", "gk", { desc = "Move up (visual line)" })
+  -- Movement with cowboy protection
+  set("n", "h", cowboy_key("h", "gj"), { expr = true, desc = "Move down (visual line)" })
+  set("n", "u", cowboy_key("u", "gk"), { expr = true, desc = "Move up (visual line)" })
   set("n", "w", "e", { desc = "Move to end of word" })
   set("n", "W", "E", { desc = "Move to end of WORD" })
   set("n", "e", "ge", { desc = "Move to end of previous word" })
@@ -38,9 +69,9 @@ local function apply_core()
   set("v", "W", "E", { desc = "Move to end of WORD" })
   set("v", "e", "ge", { desc = "Move to end of previous word" })
 
-  set("n", "j", "l", { desc = "Move right (Dvorak)" })
+  set("n", "j", cowboy_key("j", "l"), { expr = true, desc = "Move right (Dvorak)" })
   set("v", "j", "l", { desc = "Move right (Dvorak)" })
-  set("n", "J", "h", { desc = "Move left (Dvorak)" })
+  set("n", "J", cowboy_key("J", "h"), { expr = true, desc = "Move left (Dvorak)" })
   set("v", "J", "h", { desc = "Move left (Dvorak)" })
 
   set("n", "t", "w", { desc = "Next word (Dvorak)" })
