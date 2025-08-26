@@ -209,6 +209,8 @@ return {
           -- Delay the keymap setting to ensure it overrides other mappings
           vim.schedule(function()
             set_terminal_keymaps()
+            -- Switch to normal mode when toggleterm opens
+            vim.cmd("stopinsert")
           end)
         end,
       })

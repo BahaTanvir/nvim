@@ -41,3 +41,16 @@ vim.keymap.set("n", "<leader>A", function()
     vim.api.nvim_echo({ { msg, "MoreMsg" } }, false, {})
   end
 end, { desc = "Save all modified files" })
+
+-- Toggle status bar (lualine)
+vim.keymap.set("n", "<leader>uB", function()
+  local lualine = require("lualine")
+  if vim.o.laststatus == 0 then
+    vim.o.laststatus = 3
+    lualine.refresh()
+    vim.notify("Status bar enabled", vim.log.levels.INFO)
+  else
+    vim.o.laststatus = 0
+    vim.notify("Status bar disabled", vim.log.levels.INFO)
+  end
+end, { desc = "Toggle status bar" })
