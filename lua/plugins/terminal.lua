@@ -209,8 +209,11 @@ return {
           -- Delay the keymap setting to ensure it overrides other mappings
           vim.schedule(function()
             set_terminal_keymaps()
-            -- Switch to normal mode when toggleterm opens
-            vim.cmd("stopinsert")
+            -- Switch to normal mode only for vertical toggleterm (terminal #2)
+            local bufname = vim.api.nvim_buf_get_name(0)
+            if bufname:match("toggleterm#2") then
+              vim.cmd("stopinsert")
+            end
           end)
         end,
       })

@@ -45,7 +45,9 @@ local function apply_core()
   -- Escape and dash input
   set("i", "-", function()
     local cmp = package.loaded.cmp
-    if cmp and cmp.visible() then cmp.abort() end
+    if cmp and cmp.visible() then
+      cmp.abort()
+    end
     return "<C-g>u<Esc>"
   end, { expr = true, desc = "Minus as Escape (Dvorak)" })
   -- Also allow 'ht' as a fast escape chord in insert mode (but not in terminal buffers)
@@ -55,7 +57,9 @@ local function apply_core()
       return "ht"
     end
     local cmp = package.loaded.cmp
-    if cmp and cmp.visible() then cmp.abort() end
+    if cmp and cmp.visible() then
+      cmp.abort()
+    end
     return "<C-g>u<Esc>"
   end, { expr = true, desc = "ht as Escape (Dvorak)" })
   -- Alternate ways to insert a dash
@@ -87,12 +91,10 @@ local function apply_core()
 
   -- Character/position jumps
   set("n", "l", "``", { desc = "Jump back to last position" })
-  set("n", "L", "`.", { desc = "Jump to last change" })
   set("v", "l", "``", { desc = "Jump back to last position" })
-  set("v", "L", "`.", { desc = "Jump to last change" })
+  set("n", "E", "`.", { desc = "Jump to last edit" })
 
-  -- Marks & undo
-  set("n", "E", "`m", { desc = "Jump to mark m" })
+  -- undo
   set("n", "i", "u", { desc = "Undo" })
   set("n", "I", "U", { desc = "Undo line" })
 
