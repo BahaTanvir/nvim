@@ -48,8 +48,12 @@ local function apply_core()
     if cmp and cmp.visible() then cmp.abort() end
     return "<C-g>u<Esc>"
   end, { expr = true, desc = "Minus as Escape (Dvorak)" })
-  -- Also allow 'ht' as a fast escape chord in insert mode
+  -- Also allow 'ht' as a fast escape chord in insert mode (but not in terminal buffers)
   set("i", "ht", function()
+    -- Don't override terminal mode mappings
+    if vim.bo.buftype == "terminal" then
+      return "ht"
+    end
     local cmp = package.loaded.cmp
     if cmp and cmp.visible() then cmp.abort() end
     return "<C-g>u<Esc>"
@@ -148,6 +152,10 @@ local function apply_plugin_overrides()
 end
 
 local function apply_all()
+  -- Don't apply dvorak mappings in terminal buffers
+  if vim.bo.buftype == "terminal" then
+    return
+  end
   -- ensure leaders are intact
   vim.g.mapleader = " "
   vim.g.maplocalleader = "\\"

@@ -191,22 +191,25 @@ return {
 
       -- Custom terminal mappings for toggleterm
       function _G.set_terminal_keymaps()
-        local opts = { buffer = 0 }
-        vim.keymap.set("t", "<esc>", [[<C-\\><C-n>]], opts)
-        vim.keymap.set("t", "ht", [[<C-\\><C-n>]], opts)
+        local opts = { buffer = 0, silent = true }
+        vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+        vim.keymap.set("t", "ht", [[<C-\><C-n>]], opts)
         vim.keymap.set("n", "q", [[<Cmd>close<CR>]], opts)
         vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
         vim.keymap.set("t", "<C-t>", [[<Cmd>wincmd j<CR>]], opts)
         vim.keymap.set("t", "<C-n>", [[<Cmd>wincmd k<CR>]], opts)
         vim.keymap.set("t", "<C-s>", [[<Cmd>wincmd l<CR>]], opts)
-        vim.keymap.set("t", "<C-w>", [[<C-\\><C-n><C-w>]], opts)
+        vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
       end
 
       -- Apply terminal keymaps when opening toggleterm
       vim.api.nvim_create_autocmd("TermOpen", {
         pattern = "term://*toggleterm#*",
         callback = function()
-          set_terminal_keymaps()
+          -- Delay the keymap setting to ensure it overrides other mappings
+          vim.schedule(function()
+            set_terminal_keymaps()
+          end)
         end,
       })
     end,
