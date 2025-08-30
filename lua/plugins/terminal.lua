@@ -196,9 +196,9 @@ return {
         vim.keymap.set("t", "ht", [[<C-\><C-n>]], opts)
         vim.keymap.set("n", "q", [[<Cmd>close<CR>]], opts)
         vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
-        vim.keymap.set("t", "<C-t>", [[<Cmd>wincmd j<CR>]], opts)
-        vim.keymap.set("t", "<C-n>", [[<Cmd>wincmd k<CR>]], opts)
-        vim.keymap.set("t", "<C-s>", [[<Cmd>wincmd l<CR>]], opts)
+        vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+        vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+        vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
         vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
       end
 

@@ -93,9 +93,9 @@ end
 function M.wezterm()
   local nav = {
     h = "Left",
-    t = "Down",
-    n = "Up",
-    s = "Right",
+    j = "Down",
+    k = "Up",
+    l = "Right",
   }
 
   local function navigate(dir)

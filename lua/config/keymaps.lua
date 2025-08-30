@@ -13,20 +13,8 @@ vim.keymap.set("n", "<Down>", "<c-w>j")
 vim.keymap.set("n", "<Left>", "<c-w>h")
 vim.keymap.set("n", "<Right>", "<c-w>l")
 
--- Quick save (current buffer)
-vim.keymap.set("n", "<leader>h", function()
-  if vim.bo.modifiable and vim.bo.buftype == "" then
-    if vim.bo.modified then
-      vim.cmd("update")
-      vim.api.nvim_echo({ { "Saved!", "MoreMsg" } }, false, {})
-    end
-  else
-    pcall(vim.notify, "Buffer not modifiable", vim.log.levels.WARN, { title = "Save" })
-  end
-end, { desc = "Save file" })
-
 -- Write all modified files
-vim.keymap.set("n", "<leader>H", function()
+vim.keymap.set("n", "<C-S-s>", function()
   local count = 0
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     local ok = pcall(function()
@@ -54,4 +42,3 @@ vim.keymap.set("n", "<leader>uB", function()
     vim.notify("Status bar disabled", vim.log.levels.INFO)
   end
 end, { desc = "Toggle status bar" })
-
