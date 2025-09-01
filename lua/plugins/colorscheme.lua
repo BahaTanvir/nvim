@@ -58,4 +58,14 @@ return {
     "yorickpeterse/nvim-grey",
     lazy = true,
   },
+  {
+    "zenbones-theme/zenbones.nvim",
+    lazy = true,
+    dependencies = "rktjmp/lush.nvim",
+    opts = {
+      -- You can configure zenbones options here
+      -- transparent = false,
+      -- italic_comments = true,
+    },
+  },
 }
