@@ -23,25 +23,10 @@ return {
       {
         "<F10>",
         function()
-          -- Check if there are at least 2 floaterm terminals
-          local floaterm_count = 0
-          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-            if vim.api.nvim_buf_is_valid(buf) then
-              local bufname = vim.api.nvim_buf_get_name(buf)
-              if bufname:match("floaterm") then
-                floaterm_count = floaterm_count + 1
-              end
-            end
-          end
-          
-          if floaterm_count >= 2 then
-            vim.cmd("FloatermNext")
-          else
-            vim.notify("Need at least 2 floaterm terminals to switch", vim.log.levels.WARN)
-          end
+          vim.cmd("FloatermNext")
         end,
         mode = { "n", "t", "i" },
-        desc = "Next Floaterm terminal (only if 2+ terminals)",
+        desc = "Next Floaterm terminal",
       },
       -- Kill current terminal (works for both floaterm and toggleterm)
       { "<leader>tk", function()

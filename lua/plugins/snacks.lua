@@ -114,6 +114,10 @@ return {
       terminal = {
         win = {
           height = 0.99, -- 99% of screen height
+          wo = {
+            winblend = 0, -- Remove transparency (0 = fully opaque)
+            winhighlight = "Normal:Normal,NormalFloat:Normal", -- Use normal background
+          },
         },
       },
     },
