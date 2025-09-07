@@ -113,7 +113,17 @@ return {
       },
       terminal = {
         win = {
-          height = 0.99, -- 99% of screen height
+          position = "float",
+          relative = "editor",
+          width = 0.9, -- 90% of screen width
+          height = 100, -- 99% of screen height
+          row = function()
+            return math.floor((vim.o.lines - math.floor(vim.o.lines * 1)) / 2)
+          end,
+          col = function()
+            return math.floor((vim.o.columns - math.floor(vim.o.columns * 0.9)) / 2)
+          end,
+          border = "rounded",
           wo = {
             winblend = 0, -- Remove transparency (0 = fully opaque)
             winhighlight = "Normal:Normal,NormalFloat:Normal", -- Use normal background
