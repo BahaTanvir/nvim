@@ -68,4 +68,21 @@ return {
       -- italic_comments = true,
     },
   },
+  {
+    "loctvl842/monokai-pro.nvim",
+    lazy = true,
+    opts = {
+      -- You can configure monokai-pro options here
+      -- transparent = false,
+    },
+  },
+  {
+    "marko-cerovac/material.nvim",
+    lazy = true,
+    opts = {
+      -- You can configure material options here
+      -- style = "oceanic", -- choices: 'oceanic', 'palenight', 'ocean', 'lighter', 'darker', 'deep ocean'
+      -- transparent = false,
+    },
+  },
 }

@@ -21,7 +21,7 @@ return {
       { "<leader>te", "<cmd>FloatermPrev<cr>", desc = "Previous terminal" },
       { "<leader>tw", "<cmd>FloatermNext<cr>", desc = "Next terminal" },
       {
-        "<F9>",
+        "<F10>",
         function()
           vim.cmd("FloatermNext")
         end,
@@ -43,7 +43,7 @@ return {
       vim.g.floaterm_keymap_toggle = "<F7>"
       vim.g.floaterm_keymap_new = ""
       vim.g.floaterm_keymap_prev = ""
-      vim.g.floaterm_keymap_next = "<F9>"
+      vim.g.floaterm_keymap_next = "<F10>"
       -- Terminal appearance
       vim.g.floaterm_width = 0.85
       vim.g.floaterm_height = 0.99
@@ -137,7 +137,7 @@ return {
         desc = "Toggle floating terminal (toggleterm)",
       },
       {
-        "<F10>",
+        "<F9>",
         function()
           vim.cmd("2ToggleTerm direction=vertical")
         end,
