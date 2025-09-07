@@ -90,22 +90,31 @@ return {
       indent = {
         chunk = { enabled = true },
       },
-      dashboard = (vim.fn.executable("gh") == 1 and vim.fn.executable("colorscript") == 1) and { example = "github" } or {
-        sections = {
-          { section = "header", text = {
-            "",
-            "    Neovim",
-            "",
-          }},
-          { section = "keys", gap = 1 },
-          { section = "startup", gap = 1 },
+      dashboard = (vim.fn.executable("gh") == 1 and vim.fn.executable("colorscript") == 1) and { example = "github" }
+        or {
+          sections = {
+            {
+              section = "header",
+              text = {
+                "",
+                "    Neovim",
+                "",
+              },
+            },
+            { section = "keys", gap = 1 },
+            { section = "startup", gap = 1 },
+          },
         },
-      },
       gitbrowse = {
         open = function(url)
           -- Hyprland-specific script removed; just open the URL
           vim.ui.open(url)
         end,
+      },
+      terminal = {
+        win = {
+          height = 0.99, -- 99% of screen height
+        },
       },
     },
     -- stylua: ignore

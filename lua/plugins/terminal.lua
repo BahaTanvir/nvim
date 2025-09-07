@@ -28,8 +28,40 @@ return {
         mode = { "n", "t", "i" },
         desc = "Next Floaterm terminal",
       },
-      -- Kill current terminal
-      { "<leader>tk", "<cmd>FloatermKill<cr>", desc = "Kill current terminal" },
+      -- Kill current terminal (works for both floaterm and toggleterm)
+      { "<leader>tk", function()
+        local buf = vim.api.nvim_get_current_buf()
+        local bufname = vim.api.nvim_buf_get_name(buf)
+        local filetype = vim.bo[buf].filetype
+        
+        if bufname:match("floaterm") or filetype == "floaterm" then
+          vim.cmd("FloatermKill")
+        elseif bufname:match("toggleterm") or filetype == "toggleterm" then
+          vim.cmd("ToggleTermToggle")
+        else
+          -- Try to find any open terminal and close it
+          local found_terminal = false
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local win_buf = vim.api.nvim_win_get_buf(win)
+            local win_bufname = vim.api.nvim_buf_get_name(win_buf)
+            local win_filetype = vim.bo[win_buf].filetype
+            
+            if win_bufname:match("floaterm") or win_filetype == "floaterm" then
+              vim.cmd("FloatermKill")
+              found_terminal = true
+              break
+            elseif win_bufname:match("toggleterm") or win_filetype == "toggleterm" then
+              vim.cmd("ToggleTermToggle")
+              found_terminal = true
+              break
+            end
+          end
+          
+          if not found_terminal then
+            vim.notify("No terminal found to kill", vim.log.levels.WARN)
+          end
+        end
+      end, desc = "Kill current terminal (floaterm/toggleterm)" },
 
       -- Show all terminals
       { "<leader>fa", "<cmd>FloatermNew ranger<cr>", desc = "Open ranger file manager" },
