@@ -123,7 +123,6 @@ return {
           col = function()
             return math.floor((vim.o.columns - math.floor(vim.o.columns * 0.9)) / 2)
           end,
-          border = "rounded",
           wo = {
             winblend = 0, -- Remove transparency (0 = fully opaque)
             winhighlight = "Normal:Normal,NormalFloat:Normal", -- Use normal background
